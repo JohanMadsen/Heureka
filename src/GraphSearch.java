@@ -8,25 +8,27 @@ import java.util.Queue;
  */
 public class GraphSearch {
     public static List<String> graphSearch(Model model){
+
         HashSet<String> expandedNodes = new HashSet<>();
         Queue<Node> frontier = new LinkedList<>();
         frontier.add(model.getStart());
+
         while (frontier.size()>0){
             Node n = frontier.remove();
+
             if(model.goalTest(n)){
                 return n.getPath();
             }
+
             List<Edge> edges = n.getEdges();
-            for (Edge edge:edges) {
-                System.out.println(edge.getStart().toString()+ " "+n.toString());
-                System.out.println(frontier.contains(edge.getEnd()));
-                if((!frontier.contains(edge.getEnd()))&(!expandedNodes.contains(edge.getEnd().toString()))){
-                    edge.getEnd().setPath(edge.getEnd().getPath(),edge.getName());
+            for (int i =0; i<edges.size();i++) {
+                Edge edge = edges.get(i);
+                if((!frontier.contains(edge.getEnd())) && (!expandedNodes.contains(edge.getEnd().toString()))){
+                    edge.getEnd().setPath(n.getPath(),edge.getName());
                     frontier.add(edge.getEnd());
                 }
             }
             expandedNodes.add(n.toString());
-
         }
         return null;
     }

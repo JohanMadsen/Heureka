@@ -32,7 +32,9 @@ public class Node {
         return h;
     }
     public void setPath(List<String> currentPath ,String edgeName){
-        path=currentPath;
+        for(String s : currentPath) {
+            path.add(s);
+        }
         if(path.size()==0||!path.get(path.size() - 1).equals(edgeName)){
             path.add(edgeName);
         }
