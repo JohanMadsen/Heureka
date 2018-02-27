@@ -5,6 +5,6 @@ import java.util.List;
  */
 public class GraphSearch {
     public List<String> graphSearch(){
-
+        return null;
     }
 }
