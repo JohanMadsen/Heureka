@@ -13,4 +13,13 @@ public class Edge {
         this.name=name;
         this.length=Math.sqrt(Math.abs(end.getX()-start.getX())+Math.abs(end.getY()-start.getY()));
     }
+    public String getName(){
+        return name;
+    }
+    public Node getStart(){
+        return start;
+    }
+    public Node getEnd(){
+        return end;
+    }
 }
