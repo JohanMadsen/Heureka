@@ -7,12 +7,12 @@ public class Main {
 
     public static void main(String[] args) {
         String fileName = "manhattan.txt";
-        Model model = new Model(fileName);
-        Node node=model.findNode("street_0","avenue_0");
-        model.setStart(node);
-        node=model.findNode("street_6","avenue_7");
-        model.setGoal(node);
-        List<String> path = GraphSearch.graphSearch(model);
+        Map_Model mapModel = new Map_Model(fileName);
+        Node node= mapModel.findNode("street_0","avenue_0");
+        mapModel.setStart(node);
+        node= mapModel.findNode("street_0","avenue_3");
+        mapModel.setGoal(node);
+        List<String> path = GraphSearch.graphSearch(mapModel);
         System.out.println(path);
     }
 

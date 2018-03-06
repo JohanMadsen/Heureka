@@ -7,16 +7,16 @@ import java.util.Queue;
  * Created by johan_000 on 27-02-2018.
  */
 public class GraphSearch {
-    public static List<String> graphSearch(Model model){
+    public static List<String> graphSearch(Map_Model mapModel){
 
         HashSet<String> expandedNodes = new HashSet<>();
         Queue<Node> frontier = new LinkedList<>();
-        frontier.add(model.getStart());
+        frontier.add(mapModel.getStart());
 
         while (frontier.size()>0){
             Node n = frontier.remove();
 
-            if(model.goalTest(n)){
+            if(mapModel.goalTest(n)){
                 return n.getPath();
             }
 
