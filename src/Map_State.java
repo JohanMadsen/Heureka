@@ -39,6 +39,17 @@ public class Map_State implements State {
     }
 
     @Override
+    public void setH(double h) {
+        this.h = h;
+        this.f=this.g+this.h;
+    }
+
+    @Override
+    public double getG() {
+        return g;
+    }
+
+    @Override
     public List<String> getPath() {
         return path;
     }

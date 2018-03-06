@@ -8,6 +8,8 @@ interface State{
     double getF();
     void setG(double newG);
     void setF(double newF);
+    void setH(double newH);
+    double getG();
     List<String> getPath();
     void setPath(List<String> newPath);
     void extendPath(List<String> currentPath, String actionName);

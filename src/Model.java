@@ -1,7 +1,4 @@
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by johan_000 on 06-03-2018.
@@ -35,13 +32,25 @@ public abstract class Model<S extends State,A extends Action> {
 
 
 
+
     public  List<String> graphSearch(){
         HashSet<String> expandedNodes = new HashSet<>();
-        Queue<S> frontier = new LinkedList<>();
+
+        Comparator<S> comparator= new Comparator<S>() {
+            @Override
+            public int compare(S s1, S s2) {
+                return (int) (s1.getF()-s2.getF());
+            }
+        };
+        PriorityQueue<S> frontier = new PriorityQueue<S>(10,comparator);
+        //Queue<S> frontier = new LinkedList<>();
+        S start =getStartState();
+        start.setG(0);
+        start.setH(0);
         frontier.add(getStartState());
 
         while (frontier.size()>0){
-            S n = frontier.remove();
+            S n = frontier.poll();
             if(goalTest(n)){
                 return n.getPath();
             }
@@ -52,6 +61,14 @@ public abstract class Model<S extends State,A extends Action> {
                 A action = possibleActions.get(i);
                 S child =results(n,action);
                 if((!frontier.contains(child)) && (!expandedNodes.contains(child.toString()))){
+                    child.extendPath(n.getPath(),action.getName());
+                    child.setG(n.getG()+action.getCost());
+                    child.setH(0);
+                    frontier.add(child);
+                }
+                else if(frontier.contains(child)&&(child.getG()>n.getG()+action.getCost())){
+                    frontier.remove(child);
+                    child.setG(n.getG()+action.getCost());
                     child.extendPath(n.getPath(),action.getName());
                     frontier.add(child);
                 }
