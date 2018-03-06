@@ -10,109 +10,36 @@ import java.util.List;
 /**
  * Created by johan_000 on 27-02-2018.
  */
-public class Map_Model extends Model {
-    private  HashMap<String,List<Edge>> edges;
-    private  HashMap<String,Node> nodes;
-    private  Node start;
-    private Node goal;
+public class Map_Model extends Model<Map_State,Map_Action> {
+    private  HashMap<String,List<Map_Action>> actions;
+    private  HashMap<String, Map_State> states;
     public Map_Model(String fileName){
-        this.edges=new HashMap<>();
-        this.nodes= new HashMap<>();
+        this.actions=new HashMap<>();
+        this.states= new HashMap<>();
         loadmap(fileName);
-    }
-
-    public class Map_State extends State {
-        private int x;
-        private int y;
-        private double g;
-        private double h;
-        private List<Map_Action> edges;
-        private List<String> path;
-        public Map_State(int x, int y, double g, double h, List<Edge> edges) {
-            this.x = x;
-            this.y = y;
-            this.g = g;
-            this.h = h;
-            this.edges = edges;
-            this.path = new LinkedList<>();
-        }
-        public int getX(){
-            return x;
-        }
-        public int getY(){
-            return y;
-        }
-        public double getG(){
-            return g;
-        }
-        public double getH(){
-            return h;
-        }
-        public void setPath(List<String> currentPath ,String edgeName){
-            for(String s : currentPath) {
-                path.add(s);
-            }
-            if(path.size()==0||!path.get(path.size() - 1).equals(edgeName)){
-                path.add(edgeName);
-            }
-        }
-        public  List<String> getPath(){
-            return path;
-        }
-        public List<Edge> getEdges(){
-            return edges;
-        }
-        public void addEdge(Edge edge){
-            edges.add(edge);
-        }
-        public boolean equals(Node node){
-            return (node.x==x)&(node.y==y);
-        }
-        public String toString(){
-            return Integer.toString(x)+"s"+Integer.toString(y);
-        }
-    }
-
-
-
-
-    public class Map_Action extends Action{
-
     }
 
 
     @Override
-    double stepCost(State s, Action a) {
+    double stepCost(Map_State s, Map_Action a) {
         return 0;
     }
 
     @Override
-    List[] actions(State s) {
-        return new List[0];
+    List<Map_Action> actions(Map_State s) {
+        return  s.getActions();
     }
 
     @Override
-    State results(State s, Action a) {
+    Map_State results(Map_State s, Map_Action a) {
         return null;
     }
 
     @Override
-    boolean goalTest(State s) {
-        return s.equals(goal);
+    boolean goalTest(Map_State s) {
+        return s.equals(getGoalState());
     }
 
-    public void setStart(Node node){
-        start=node;
-    }
-    public void setGoal(Node node){
-        goal=node;
-    }
-    public Node getStart(){
-        return start;
-    }
-    public Node getGoal(){
-        return goal;
-    }
 
     private void loadmap(String fileName){
         try{
@@ -124,24 +51,24 @@ public class Map_Model extends Model {
                 String[] split=strLine.split("\\s+");
                 for (int i = 0; i <2 ; i++) {
                     String key=split[i*3]+"s"+split[1+i*3];
-                    if(!nodes.containsKey(key)){
-                        Node node = new Node(Integer.parseInt(split[i*3]),Integer.parseInt(split[i*3+1]),0,0,new ArrayList<>());
-                        nodes.put(node.toString(),node);
+                    if(!states.containsKey(key)){
+                        Map_State node = new Map_State(Integer.parseInt(split[i*3]),Integer.parseInt(split[i*3+1]),0,0);
+                        states.put(node.toString(),node);
                     }
                 }
                 String key1=split[0]+"s"+split[1];
                 String key2=split[3]+"s"+split[4];
-                Node start=nodes.get(key1);
-                Node end = nodes.get(key2);
-                Edge edge = new Edge(start,end,split[2]);
-                start.addEdge(edge);
-                if(!edges.containsKey(edge.getName())){
-                    edges.put(edge.getName(),new ArrayList<>());
-                    edges.get(edge.getName()).add(edge);
+                Map_State start=states.get(key1);
+                Map_State end = states.get(key2);
+                Map_Action action = new Map_Action(start,end,split[2]);
+                start.addAction(action);
+                if(!actions.containsKey(action.getName())){
+                    actions.put(action.getName(),new ArrayList<>());
+                    actions.get(action.getName()).add(action);
 
                 }
                 else {
-                    edges.get(edge.getName()).add(edge);
+                    actions.get(action.getName()).add(action);
                 }
             }
             in.close();
@@ -150,16 +77,15 @@ public class Map_Model extends Model {
         }
         return;
     }
-    public Node findNode(String street1, String street2){
-        List<Edge> edgesWithName1=edges.get(street1);
-        List<Edge> edgesWithName2=edges.get(street2);
-        for (Edge e1:edgesWithName1) {
-            for (Edge e2:edgesWithName2){
+    public Map_State findNode(String street1, String street2){
+        List<Map_Action> edgesWithName1=actions.get(street1);
+        List<Map_Action> edgesWithName2=actions.get(street2);
+        for (Map_Action e1:edgesWithName1) {
+            for (Map_Action e2:edgesWithName2){
                 if(e1.getStart().equals(e2.getStart())||e1.getStart().equals(e2.getEnd())){
                     return e1.getStart();
                 }
                 else if(e1.getEnd().equals(e2.getStart())||e1.getEnd().equals(e2.getEnd())){
-                    return e1.getEnd();
                     return e1.getEnd();
                 }
             }

@@ -7,20 +7,20 @@ import java.util.Queue;
  * Created by johan_000 on 27-02-2018.
  */
 public class GraphSearch {
-    public static List<String> graphSearch(Map_Model mapModel){
-
+    public static List<String> graphSearch(Model model){
+/*
         HashSet<String> expandedNodes = new HashSet<>();
-        Queue<Node> frontier = new LinkedList<>();
-        frontier.add(mapModel.getStart());
+        Queue<State> frontier = new LinkedList<>();
+        frontier.add(model.getStartState());
 
         while (frontier.size()>0){
-            Node n = frontier.remove();
+            State n = frontier.remove();
 
-            if(mapModel.goalTest(n)){
+            if(model.goalTest(n)){
                 return n.getPath();
             }
 
-            List<Edge> edges = n.getEdges();
+            List<model.> actions = model.actions(n);
             for (int i =0; i<edges.size();i++) {
                 Edge edge = edges.get(i);
                 if((!frontier.contains(edge.getEnd())) && (!expandedNodes.contains(edge.getEnd().toString()))){
@@ -30,6 +30,9 @@ public class GraphSearch {
             }
             expandedNodes.add(n.toString());
         }
+        */
         return null;
+
     }
+
 }
