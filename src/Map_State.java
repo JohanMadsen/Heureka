@@ -48,15 +48,8 @@ public class Map_State implements State {
         this.path = path;
     }
 
-    public int getX(){
-        return x;
-    }
-    public int getY(){
-        return y;
-    }
-
+    @Override
     public void extendPath(List<String> currentPath ,String edgeName){
-        List<String> path=new LinkedList<>();
         for(String s : currentPath) {
             path.add(s);
         }
@@ -64,6 +57,13 @@ public class Map_State implements State {
             path.add(edgeName);
         }
         setPath(path);
+    }
+
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
     }
     public void addAction(Map_Action a){
         actions.add(a);

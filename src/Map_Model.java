@@ -32,7 +32,7 @@ public class Map_Model extends Model<Map_State,Map_Action> {
 
     @Override
     Map_State results(Map_State s, Map_Action a) {
-        return null;
+        return a.getEnd();
     }
 
     @Override

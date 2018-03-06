@@ -10,6 +10,7 @@ interface State{
     void setF(double newF);
     List<String> getPath();
     void setPath(List<String> newPath);
+    void extendPath(List<String> currentPath, String actionName);
 
 }
 

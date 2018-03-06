@@ -10,11 +10,10 @@ public class Main {
         Map_Model mapModel = new Map_Model(fileName);
         Map_State node= mapModel.findNode("street_0","avenue_0");
         mapModel.setStartState(node);
-        node= mapModel.findNode("street_0","avenue_3");
+        node= mapModel.findNode("street_3","avenue_3");
         mapModel.setGoalState(node);
-        System.out.println(mapModel.actions(mapModel.getStartState()).get(1).getName());
-        //List<String> path = GraphSearch.graphSearch(mapModel);
-        //System.out.println(path);
+        List<String> path = mapModel.graphSearch();
+        System.out.println(path);
     }
 
 }
