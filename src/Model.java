@@ -31,11 +31,8 @@ public abstract class Model<S extends State,A extends Action> {
     }
 
 
-
-
     public  List<String> graphSearch(){
         HashSet<String> expandedNodes = new HashSet<>();
-
         Comparator<S> comparator= new Comparator<S>() {
             @Override
             public int compare(S s1, S s2) {
@@ -52,6 +49,7 @@ public abstract class Model<S extends State,A extends Action> {
         while (frontier.size()>0){
             S n = frontier.poll();
             if(goalTest(n)){
+                System.out.println(n.getF());
                 return n.getPath();
             }
 
@@ -62,13 +60,13 @@ public abstract class Model<S extends State,A extends Action> {
                 S child =results(n,action);
                 if((!frontier.contains(child)) && (!expandedNodes.contains(child.toString()))){
                     child.extendPath(n.getPath(),action.getName());
-                    child.setG(n.getG()+action.getCost());
+                    child.setG(n.getG()+stepCost(n,action));
                     child.setH(0);
                     frontier.add(child);
                 }
                 else if(frontier.contains(child)&&(child.getG()>n.getG()+action.getCost())){
                     frontier.remove(child);
-                    child.setG(n.getG()+action.getCost());
+                    child.setG(n.getG()+stepCost(n,action));
                     child.extendPath(n.getPath(),action.getName());
                     frontier.add(child);
                 }

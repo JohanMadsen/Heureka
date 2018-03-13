@@ -7,7 +7,6 @@ import java.util.List;
 interface State{
     double getF();
     void setG(double newG);
-    void setF(double newF);
     void setH(double newH);
     double getG();
     List<String> getPath();

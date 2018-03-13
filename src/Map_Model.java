@@ -2,10 +2,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by johan_000 on 27-02-2018.
@@ -13,16 +10,21 @@ import java.util.List;
 public class Map_Model extends Model<Map_State,Map_Action> {
     private  HashMap<String,List<Map_Action>> actions;
     private  HashMap<String, Map_State> states;
-    public Map_Model(String fileName){
+    private String fileName;
+    public Map_Model(String fileName,String road1,String road2,String road3, String road4){
+        this.fileName=fileName;
         this.actions=new HashMap<>();
-        this.states= new HashMap<>();
-        loadmap(fileName);
+        this.states= new HashMap<String,Map_State>();
+        loadmap();
+        setStartState(findNode(road1,road2));
+        setGoalState(findNode(road3,road4));
+        setup();
     }
 
 
     @Override
     double stepCost(Map_State s, Map_Action a) {
-        return 0;
+        return a.getCost();
     }
 
     @Override
@@ -32,6 +34,7 @@ public class Map_Model extends Model<Map_State,Map_Action> {
 
     @Override
     Map_State results(Map_State s, Map_Action a) {
+
         return a.getEnd();
     }
 
@@ -40,8 +43,18 @@ public class Map_Model extends Model<Map_State,Map_Action> {
         return s.equals(getGoalState());
     }
 
+    private double calculateH(Map_State state){
+        Map_State goal =getGoalState();
+        return Math.sqrt(Math.pow(goal.getX()-state.getX(),2)+Math.pow(goal.getY()-state.getY(),2));
+    }
 
-    private void loadmap(String fileName){
+    private void setup() {
+        for (Map_State state : states.values()) {
+            state.setH(calculateH(state));
+        }
+    }
+
+    private void loadmap(){
         try{
             FileInputStream fstream = new FileInputStream(fileName);
             DataInputStream in = new DataInputStream(fstream);
@@ -75,7 +88,6 @@ public class Map_Model extends Model<Map_State,Map_Action> {
         }catch (Exception e){
             System.err.println("Error: " + e.getMessage());
         }
-        return;
     }
     public Map_State findNode(String street1, String street2){
         List<Map_Action> edgesWithName1=actions.get(street1);

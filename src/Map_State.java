@@ -33,10 +33,6 @@ public class Map_State implements State {
         this.g = g;
         this.f=this.g+this.h;
     }
-    @Override
-    public void setF(double f) {
-        this.f = f;
-    }
 
     @Override
     public void setH(double h) {
