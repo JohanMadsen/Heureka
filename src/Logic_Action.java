@@ -31,4 +31,9 @@ public class Logic_Action implements Action{
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return clause.toString();
+    }
 }

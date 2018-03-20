@@ -44,7 +44,6 @@ public abstract class Model<S extends State,A extends Action> {
                 System.out.println(n.getF());
                 return n.getPath();
             }
-
             List<A> possibleActions = actions(n);
 
             for (int i =0; i<possibleActions.size();i++) {

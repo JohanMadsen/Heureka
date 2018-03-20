@@ -14,8 +14,8 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
     public Logic_Model(String fileName, Clause clause ){
         this.fileName=fileName;
         this.start = new Clause(clause.getNegative(),clause.getPositive());
-        this.knowlageBase=new TreeSet<>();
-        setStartState(new Logic_State(clause,0,clause.getPositive().size()+clause.getNegative().size()));
+        this.knowlageBase=new HashSet<>();
+        setStartState(new Logic_State(start,0,clause.getPositive().size()+clause.getNegative().size()));
         setup();
     }
 
@@ -58,18 +58,19 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
 
     @Override
     Logic_State results(Logic_State logic_state, Logic_Action logic_action) {
-        Set<String> positive=new HashSet<>();
-        positive.addAll(logic_state.getPositive());
+        Set<String> positive = new HashSet<>(logic_state.getPositive());
         positive.addAll(logic_action.getPositive());
-        Set<String> negative=new HashSet<>();
-        negative.addAll(logic_state.getNegative());
+        Set<String> negative = new HashSet<>(logic_state.getNegative());
         negative.addAll(logic_action.getNegative());
-        Set<String> intersection = new HashSet<String>(positive);
+        Set<String> intersection = new HashSet<>(positive);
         intersection.retainAll(negative);
         positive.removeAll(intersection);
         negative.removeAll(intersection);
+
+
         Clause clause = new Clause(positive,negative);
-        Logic_State result=new Logic_State(clause,logic_state.getG()+stepCost(logic_state,logic_action),positive.size()+negative.size());
+       // Logic_State result=new Logic_State(clause,logic_state.getG()+stepCost(logic_state,logic_action),positive.size()+negative.size());
+         Logic_State result=new Logic_State(clause,logic_state.getG()+stepCost(logic_state,logic_action),0);
         return result;
     }
     private void setup(){
@@ -78,11 +79,11 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
-            int count=0;
             while ((strLine = br.readLine()) != null)   {
-                Set<String> positive= new TreeSet<>();
-                Set<String> negative= new TreeSet<>();
+                Set<String> positive= new HashSet<>();
+                Set<String> negative= new HashSet<>();
                 String[] split=strLine.split("\\s+");
+
                 int ifposition=-1;
                 for (int i = 0; i <split.length ; i++) {
                     if(split[i].equals("if"))ifposition=i;
@@ -100,8 +101,13 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
                         negative.add(split[i]);
                     }
                 }
+                Set<String>intersection = new HashSet<>(positive);
+                intersection.retainAll(negative);
+                positive.removeAll(intersection);
+                negative.removeAll(intersection);
+
                 Clause clause = new Clause(positive,negative);
-                Logic_Action action=new Logic_Action(clause,Integer.toString(count));
+                Logic_Action action=new Logic_Action(clause,clause.toString());
                 knowlageBase.add(action);
             }
             in.close();

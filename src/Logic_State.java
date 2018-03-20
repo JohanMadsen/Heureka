@@ -1,6 +1,5 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by johan_000 on 20-03-2018.
@@ -69,6 +68,10 @@ public class Logic_State implements State {
         return clause.getNegative();
     }
 
+    @Override
+    public String toString() {
+        return clause.toString();
+    }
 
     public boolean equals(Logic_State state){
        return  state.getPositive().equals(this.clause.getPositive())&&state.getNegative().equals(this.clause.getNegative());

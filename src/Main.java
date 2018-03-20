@@ -11,9 +11,11 @@ public class Main {
         String fileName = "Simple.txt";
         Set<String> positive = new HashSet<>();
         positive.add("a");
+        positive.add("c");
         Clause clause = new Clause(positive,new HashSet<String>());
         Logic_Model logic_model = new Logic_Model(fileName,clause);
-        logic_model.graphSearch();
+        List<String> pathL =logic_model.graphSearch();
+        System.out.println(pathL);
         /*
         String fileName = "manhattan.txt";
         Map_Model mapModel = new Map_Model(fileName,"street_0","avenue_0","street_9","avenue_9");

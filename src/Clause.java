@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -18,5 +19,26 @@ public class Clause {
 
     public Set<String> getNegative() {
         return negative;
+    }
+
+    @Override
+    public String toString() {
+        String string;
+        String[] pos = new String[positive.size()];
+        int count=0;
+        for(String l : positive){
+            pos[count]=l;
+            count++;
+        }
+        Arrays.sort(pos);
+        String[] neg = new String[negative.size()];
+        count=0;
+        for(String l : negative){
+            neg[count]=l;
+            count++;
+        }
+        Arrays.sort(neg);
+        string = Arrays.toString(pos)+"1"+Arrays.toString(neg);
+        return string;
     }
 }
