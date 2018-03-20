@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         String fileName = "manhattan.txt";
-        Map_Model mapModel = new Map_Model(fileName,"street_0","avenue_0","street_3","avenue_3");
+        Map_Model mapModel = new Map_Model(fileName,"street_0","avenue_0","street_9","avenue_9");
         List<String> path = mapModel.graphSearch();
         System.out.println(path);
 
@@ -19,7 +19,6 @@ public class Main {
         Map_Model mapModel3= new Map_Model(fileName2,"Vestervoldgade","SktPedersStraede","Vestervoldgade","Vestergade"); //Google maps says 400 m - we say 450 m - we use the same roads
         List<String> path3 = mapModel3.graphSearch();
         System.out.println(path3);
-
 
 
     }

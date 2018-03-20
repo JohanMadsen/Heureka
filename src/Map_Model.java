@@ -45,8 +45,8 @@ public class Map_Model extends Model<Map_State,Map_Action> {
 
     private double calculateH(Map_State state){
         Map_State goal =getGoalState();
-        return Math.abs(goal.getY()-state.getY());
-        //return Math.sqrt(Math.pow(goal.getX()-state.getX(),2)+Math.pow(goal.getY()-state.getY(),2));
+        //return 0;
+        return Math.sqrt(Math.pow(goal.getX()-state.getX(),2)+Math.pow(goal.getY()-state.getY(),2));
     }
 
     private void setup() {
