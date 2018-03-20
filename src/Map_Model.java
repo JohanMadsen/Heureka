@@ -16,7 +16,10 @@ public class Map_Model extends Model<Map_State,Map_Action> {
         this.actions=new HashMap<>();
         this.states= new HashMap<String,Map_State>();
         loadmap();
-        setStartState(findNode(road1,road2));
+        Map_State startState=findNode(road1,road2);
+        startState.setG(0);
+        startState.setH(0);
+        setStartState(startState);
         setGoalState(findNode(road3,road4));
         setup();
     }

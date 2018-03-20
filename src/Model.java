@@ -36,10 +36,7 @@ public abstract class Model<S extends State,A extends Action> {
         PriorityQueue<S> frontier = new PriorityQueue<S>(10,Comparator.comparingDouble(S::getF));
         //Queue<S> frontier = new LinkedList<>();
         S start =getStartState();
-        start.setG(0);
-        start.setH(0);
-        frontier.add(getStartState());
-        int count =0;
+        frontier.add(start);
         while (frontier.size()>0){
             S n = frontier.poll();
             if(goalTest(n)){

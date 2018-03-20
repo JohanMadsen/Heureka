@@ -1,4 +1,6 @@
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by johan_000 on 27-02-2018.
@@ -6,7 +8,13 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-
+        String fileName = "Simple.txt";
+        Set<String> positive = new HashSet<>();
+        positive.add("a");
+        Clause clause = new Clause(positive,new HashSet<String>());
+        Logic_Model logic_model = new Logic_Model(fileName,clause);
+        logic_model.graphSearch();
+        /*
         String fileName = "manhattan.txt";
         Map_Model mapModel = new Map_Model(fileName,"street_0","avenue_0","street_9","avenue_9");
         List<String> path = mapModel.graphSearch();
@@ -19,7 +27,7 @@ public class Main {
         Map_Model mapModel3= new Map_Model(fileName2,"Vestervoldgade","SktPedersStraede","Vestervoldgade","Vestergade"); //Google maps says 400 m - we say 450 m - we use the same roads
         List<String> path3 = mapModel3.graphSearch();
         System.out.println(path3);
-
+        */
 
     }
 
