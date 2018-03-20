@@ -10,9 +10,10 @@ public class Main {
     public static void main(String[] args) {
         String fileName = "Simple.txt";
         Set<String> positive = new HashSet<>();
-        positive.add("a");
-        positive.add("c");
-        Clause clause = new Clause(positive,new HashSet<String>());
+        Set<String> negative = new HashSet<>();
+        //positive.add("q");
+        negative.add("b");
+        Clause clause = new Clause(positive,negative);
         Logic_Model logic_model = new Logic_Model(fileName,clause);
         List<String> pathL =logic_model.graphSearch();
         System.out.println(pathL);
