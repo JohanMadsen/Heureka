@@ -8,7 +8,7 @@ public class Map_Action implements Action {
     private String name;
     public Map_Action(Map_State start,Map_State  end,String name){
         this.name=name;
-        this.cost=Math.sqrt(Math.abs(end.getX()-start.getX())+Math.abs(end.getY()-start.getY()));
+        this.cost=Math.sqrt(Math.pow(end.getX()-start.getX(),2)+Math.pow(end.getY()-start.getY(),2));
         this.start=start;
         this.end=end;
     }
