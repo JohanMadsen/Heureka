@@ -70,6 +70,10 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
 
         Clause clause = new Clause(positive,negative);
         Logic_State result=new Logic_State(clause,logic_state.getG()+stepCost(logic_state,logic_action),positive.size()+negative.size());
+        Logic_Action action=new Logic_Action(clause,clause.toString());
+        if(!knowlageBase.contains(action)){
+            knowlageBase.add(action);
+        }
         return result;
     }
     private void setup(){
