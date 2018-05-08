@@ -10,7 +10,7 @@ public class Logic_Action implements Action{
 
     public Logic_Action(Clause clause,String name){
         this.name=name;
-        this.cost=1.0;
+        this.cost=0;
         this.clause=clause;
     }
 

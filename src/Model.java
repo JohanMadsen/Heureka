@@ -34,7 +34,6 @@ public abstract class Model<S extends State,A extends Action> {
     public  List<String> graphSearch(){
         HashSet<String> expandedNodes = new HashSet<>();
         PriorityQueue<S> frontier = new PriorityQueue<S>(10,Comparator.comparingDouble(S::getF));
-        //Queue<S> frontier = new LinkedList<>();
         S start =getStartState();
         frontier.add(start);
         while (frontier.size()>0){
