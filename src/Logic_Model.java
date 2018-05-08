@@ -9,12 +9,12 @@ import java.util.*;
  */
 public class Logic_Model extends Model<Logic_State,Logic_Action> {
     Clause start;
-    Set<Logic_Action> knowlageBase;
+    Set<Logic_Action> knowledgeBase;
     private String fileName;
     public Logic_Model(String fileName, Clause clause ){
         this.fileName=fileName;
         this.start = new Clause(clause.getNegative(),clause.getPositive());
-        this.knowlageBase=new HashSet<>();
+        this.knowledgeBase =new HashSet<>();
         setStartState(new Logic_State(start,0,clause.getPositive().size()+clause.getNegative().size()));
         setup();
     }
@@ -28,7 +28,7 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
     @Override
     List<Logic_Action> actions(Logic_State logic_state) {
         List<Logic_Action> actions = new LinkedList<>();
-        Iterator<Logic_Action> kbIter = knowlageBase.iterator();
+        Iterator<Logic_Action> kbIter = knowledgeBase.iterator();
         while (kbIter.hasNext()) {
             Logic_Action action = kbIter.next();
             Iterator<String> positiveIter = logic_state.getPositive().iterator();
@@ -71,8 +71,8 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
         Clause clause = new Clause(positive,negative);
         Logic_State result=new Logic_State(clause,logic_state.getG()+stepCost(logic_state,logic_action),positive.size()+negative.size());
         Logic_Action action=new Logic_Action(clause,clause.toString());
-        if(!knowlageBase.contains(action)){
-            knowlageBase.add(action);
+        if(!knowledgeBase.contains(action)){
+            knowledgeBase.add(action);
         }
         return result;
     }
@@ -111,7 +111,7 @@ public class Logic_Model extends Model<Logic_State,Logic_Action> {
 
                 Clause clause = new Clause(positive,negative);
                 Logic_Action action=new Logic_Action(clause,clause.toString());
-                knowlageBase.add(action);
+                knowledgeBase.add(action);
             }
             in.close();
         }catch (Exception e){
